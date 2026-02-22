@@ -4,13 +4,20 @@
   "features": {
     "ghcr.io/devcontainers/features/python:1": {}
   },
+  "remoteEnv": {
+    "PATH": "/home/vscode/.local/bin:${containerEnv:PATH}"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
         "astral-sh.uv",
         "ms-python.python"
-      ]
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python",
+        "python.terminal.activateEnvironment": true
+      }
     }
   },
-  "postCreateCommand": "pip install uv && uv pip install fastapi"
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\"$HOME/.local/bin:$PATH\" && cd /workspaces/$(ls -1 /workspaces | head -n 1) && uv venv && . .venv/bin/activate && uv pip install fastapi"
 }
